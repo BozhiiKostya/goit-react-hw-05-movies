@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { fetchTrending } from '../../api';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { StyledSection } from './Home.styled';
 import Loading from 'components/Loading/Loading';
 
 const Home = () => {
   const [query, setQuery] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const getTrending = async () => {
@@ -31,7 +32,7 @@ const Home = () => {
         {query.map(movie => (
           <li key={movie.id}>
             {
-              <Link to={`/movies/${movie.id}`}>
+              <Link state={{ from: location }} to={`/movies/${movie.id}`}>
                 {movie.name ? movie.name : movie.title}
               </Link>
             }
